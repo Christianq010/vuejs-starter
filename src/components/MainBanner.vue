@@ -22,15 +22,9 @@
 </template>
 
 <script>
-// slug: [
-//         {
-//           url: `/article/${fields.uid}`,
-//           uri: "hello world"
-//         }
-//       ],
 export default {
-  name: 'Main Banner',
-  data () {
+  name: "MainBanner",
+    data () {
     return {
       documentId: '',
       fields: {
@@ -42,7 +36,7 @@ export default {
         url: null,
         banner_img: null,
         article_content: null
-      },
+      }
     }
   },
   methods: {

@@ -1,0 +1,134 @@
+{
+    "Main" : {
+      "uid" : {
+        "type" : "UID",
+        "config" : {
+          "label" : "UID",
+          "placeholder" : "Enter the URL here"
+        }
+      },
+      "title" : {
+        "type" : "StructuredText",
+        "config" : {
+          "single" : "heading1",
+          "label" : "Title",
+          "placeholder" : "Blog post title..."
+        }
+      },
+      "description" : {
+        "type" : "StructuredText",
+        "config" : {
+          "multi" : "paragraph",
+          "label" : "Description",
+          "placeholder" : "Enter brief description for article"
+        }
+      },
+      "category" : {
+        "type" : "StructuredText",
+        "config" : {
+          "single" : "paragraph, preformatted, heading1, heading2, heading3, heading4, heading5, heading6",
+          "label" : "category",
+          "placeholder" : "Enter category"
+        }
+      },
+      "author" : {
+        "type" : "StructuredText",
+        "config" : {
+          "single" : "paragraph, preformatted, heading1, heading2, heading3, heading4, heading5, heading6",
+          "label" : "Author",
+          "placeholder" : "Eg. Zack Snyder"
+        }
+      },
+      "author_credentials" : {
+        "type" : "StructuredText",
+        "config" : {
+          "single" : "paragraph, preformatted, heading1, heading2, heading3, heading4, heading5, heading6",
+          "label" : "Author Credentials",
+          "placeholder" : "Eg. Senior Political Economy Reporter, HuffPost"
+        }
+      },
+      "author_social" : {
+        "type" : "Link",
+        "config" : {
+          "label" : "Author Social",
+          "placeholder" : "Eg. https://twitter.com/christianq010"
+        }
+      },
+      "timestamp" : {
+        "type" : "Timestamp",
+        "config" : {
+          "label" : "timestamp",
+          "placeholder" : "Eg. 09/15/2018 10:50 pm ET"
+        }
+      },
+      "body" : {
+        "type" : "Slices",
+        "fieldset" : "Slice zone",
+        "config" : {
+          "choices" : {
+            "text" : {
+              "type" : "Slice",
+              "fieldset" : "Text",
+              "description" : "A rich text section",
+              "icon" : "text_fields",
+              "non-repeat" : {
+                "text" : {
+                  "type" : "StructuredText",
+                  "config" : {
+                    "multi" : "paragraph, heading2, heading3, heading4, heading5, heading6, strong, em, hyperlink, list-item, o-list-item",
+                    "allowTargetBlank" : true,
+                    "label" : "Text",
+                    "placeholder" : "Enter your text..."
+                  }
+                }
+              },
+              "repeat" : { }
+            },
+            "quote" : {
+              "type" : "Slice",
+              "fieldset" : "Quote",
+              "description" : "A featured quote",
+              "icon" : "format_quote",
+              "non-repeat" : {
+                "quote" : {
+                  "type" : "StructuredText",
+                  "config" : {
+                    "single" : "paragraph, strong, em",
+                    "label" : "quote",
+                    "placeholder" : "Enter quote..."
+                  }
+                }
+              },
+              "repeat" : { }
+            },
+            "image" : {
+              "type" : "Slice",
+              "fieldset" : "Image",
+              "description" : "An image with optional caption",
+              "icon" : "image",
+              "non-repeat" : {
+                "image" : {
+                  "type" : "Image",
+                  "config" : {
+                    "constraint" : { },
+                    "thumbnails" : [ ],
+                    "label" : "Image"
+                  }
+                },
+                "caption" : {
+                  "type" : "StructuredText",
+                  "config" : {
+                    "single" : "paragraph, strong, em, hyperlink",
+                    "allowTargetBlank" : true,
+                    "label" : "Caption",
+                    "placeholder" : "Optional image caption..."
+                  }
+                }
+              },
+              "repeat" : { }
+            }
+          }
+        }
+      }
+    }
+  }

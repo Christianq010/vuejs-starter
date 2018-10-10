@@ -1,63 +1,82 @@
 <template>
     <div id="app">
         <navbar />
-        <random v-bind:fields="fields"></random>
+        <social-share-col />
+        <main-article v-bind:fields="fields" v-bind:slices="slices"></main-article>
+        <!-- <random v-bind:fields="fields"></random> -->
     </div>
 </template>
 
 <script>
 import Navbar from "./../components/NavBar/Navbar";
-import Random from "./../components/Random";
+
+import SocialShareCol from "./../components/Articles/SocialShareCol";
+import MainArticle from "./../components/Articles/MainArticle";
 
 export default {
   name: "article",
-    data () {
+  data() {
     return {
-      documentId: '',
+      documentId: "",
       fields: {
         uid: null,
+        banner_img: null,
+        banner_img_url: null,
         title: null,
         description: null,
-        ctaLink: null,
-        ctaText: null,
-        url: null,
-        banner_img: null,
-        article_content: null
+        category: null,
+        author: null,
+        author_credentials: null,
+        author_social: null,
+        timestamp: null
+      },
+      slices: {
+        text: null,
+        quote: null,
+        image: null,
+        caption: null
       }
-    }
+    };
   },
   methods: {
-    getContent (uid) {
-      this.$prismic.client.getSingle('main_banner')
-        .then((document) => {
-          if (document) {
-            this.documentId = document.id
-            this.fields.uid = document.uid
-            this.fields.title = document.data.title
-            this.fields.description = document.data.description
-            this.fields.ctaLink = document.data.cta_link
-            this.fields.ctaText = document.data.cta_text
-            this.fields.banner_img = document.data.banner_img
-            this.fields.url =  document.data.banner_img.url
-            this.fields.article_content =  document.data.article_content
-          } else {
-            this.$router.push({ name: 'not-found' })
-          }
-        })
+    getContent(uid) {
+      this.$prismic.client.getSingle("article").then(document => {
+        if (document) {
+          this.documentId = document.id;
+          this.fields.uid = document.uid;
+          this.fields.banner_img = document.data.banner_img;
+          this.fields.banner_img_url = document.data.banner_img.url;
+          this.fields.title = document.data.title;
+          this.fields.description = document.data.description;
+          this.fields.category = document.data.category;
+          this.fields.author = document.data.author;
+          this.fields.author_credentials = document.data.author_credentials;
+          this.fields.author_social = document.data.author_social;
+          this.fields.timestamp = document.data.timestamp;
+
+          this.slices.text = document.data.body.text;
+          this.slices.quote = document.data.body.quote;
+          this.slices.image = document.data.body.image;
+          this.slices.caption = document.data.body.caption;
+        } else {
+          this.$router.push({ name: "not-found" });
+        }
+      });
     }
   },
-  created () {
-    this.getContent(this.$route.params.uid)
+  created() {
+    this.getContent(this.$route.params.uid);
   },
-  beforeRouteUpdate (to, from, next) {
-    this.getContent(to.params.uid)
-    next()
+  beforeRouteUpdate(to, from, next) {
+    this.getContent(to.params.uid);
+    next();
   },
   components: {
     Navbar,
-    Random
+    SocialShareCol,
+    MainArticle
   }
-}
+};
 </script>
 
 <style scoped>
