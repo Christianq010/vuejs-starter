@@ -2,8 +2,8 @@
     <div id="app">
         <navbar />
         <social-share-col />
-        <main-article v-bind:fields="fields" v-bind:slices="slices"></main-article>
-        <!-- <random v-bind:fields="fields"></random> -->
+        <main-article v-bind:fields="fields"></main-article>
+        <!-- <p> {{ $prismic.richTextAsPlain(fields.title) }}  </p> -->
     </div>
 </template>
 
@@ -14,7 +14,7 @@ import SocialShareCol from "./../components/Articles/SocialShareCol";
 import MainArticle from "./../components/Articles/MainArticle";
 
 export default {
-  name: "article",
+  // name: "article",
   data() {
     return {
       documentId: "",
@@ -29,18 +29,12 @@ export default {
         author_credentials: null,
         author_social: null,
         timestamp: null
-      },
-      slices: {
-        text: null,
-        quote: null,
-        image: null,
-        caption: null
       }
     };
   },
   methods: {
     getContent(uid) {
-      this.$prismic.client.getSingle("article").then(document => {
+      this.$prismic.client.getSingle("main_banner").then(document => {
         if (document) {
           this.documentId = document.id;
           this.fields.uid = document.uid;
@@ -53,11 +47,6 @@ export default {
           this.fields.author_credentials = document.data.author_credentials;
           this.fields.author_social = document.data.author_social;
           this.fields.timestamp = document.data.timestamp;
-
-          this.slices.text = document.data.body.text;
-          this.slices.quote = document.data.body.quote;
-          this.slices.image = document.data.body.image;
-          this.slices.caption = document.data.body.caption;
         } else {
           this.$router.push({ name: "not-found" });
         }

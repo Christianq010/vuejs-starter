@@ -2,7 +2,7 @@
     <!-- Main Section -->
     <!-- Main Content Wrapper with image-->
         <div class="main-content-wrapper" 
-            v-bind:style="{ 'background-image': 'url(' + fields.url + ')' }">
+            v-bind:style="{ 'background-image': 'url(' + fields.img_url + ')' }">
             <!-- Overlay -->
             <div class="main-content-overlay">
                 <!-- Main Heading -->
@@ -29,30 +29,32 @@ export default {
       documentId: '',
       fields: {
         uid: null,
+        img_url: null,
         title: null,
         description: null,
-        ctaLink: null,
-        ctaText: null,
-        url: null,
-        banner_img: null,
-        article_content: null
+        category: null,
+        author: null,
+        author_credentials: null,
+        author_social: null,
+        timestamp: null
       }
     }
   },
   methods: {
     getContent (uid) {
-      this.$prismic.client.getSingle('main_banner')
+      this.$prismic.client.getSingle('main_article')
         .then((document) => {
           if (document) {
             this.documentId = document.id
             this.fields.uid = document.uid
+            this.fields.img_url =  document.data.banner_image.url
             this.fields.title = document.data.title
             this.fields.description = document.data.description
-            this.fields.ctaLink = document.data.cta_link
-            this.fields.ctaText = document.data.cta_text
-            this.fields.banner_img = document.data.banner_img
-            this.fields.url =  document.data.banner_img.url
-            this.fields.article_content =  document.data.article_content
+            this.fields.category = document.data.category;
+            this.fields.author = document.data.author;
+            this.fields.author_credentials = document.data.author_credentials;
+            this.fields.author_social = document.data.author_social;
+            this.fields.timestamp = document.data.timestamp;
           } else {
             this.$router.push({ name: 'not-found' })
           }
@@ -68,7 +70,6 @@ export default {
   }
 }
 </script>
-
 <style lang="scss">
 
 @import "./../scss/main";

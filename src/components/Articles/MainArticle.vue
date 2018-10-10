@@ -1,14 +1,14 @@
 <template>
     <div>
+        <!-- <p> {{fields}} </p> -->
         <p> {{ $prismic.richTextAsPlain(fields.title) }} </p>
-        <!-- <p> {{slices}} </p> -->
     </div>
 </template>
 
 
 <script>
 export default {
-  props: ["fields", "slices"],
+  props: ["fields"],
 };
 </script>
 
