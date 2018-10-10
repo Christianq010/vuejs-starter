@@ -13,7 +13,7 @@ export default new Router({
   routes: [
     {
       path: '/',
-      redirect: { name: 'page' }
+      redirect: { name: 'home' }
     },
     {
       path: '/not-found',

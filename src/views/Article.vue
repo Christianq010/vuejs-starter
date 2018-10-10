@@ -10,7 +10,7 @@ import Navbar from "./../components/NavBar/Navbar";
 import Random from "./../components/Random";
 
 export default {
-  name: "app",
+  name: "article",
     data () {
     return {
       documentId: '',

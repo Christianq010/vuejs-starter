@@ -7,7 +7,7 @@
             <div class="main-content-overlay">
                 <!-- Main Heading -->
                 <div class="main-content-h1-w">
-                  <router-link to="/article/trump-shows-trade-true-colors" v-bind:fields="fields" tag="div">
+                  <router-link :to="{ name: 'article', params: { uid: fields.uid }}" v-bind:fields="fields" tag="div">
                     <div class="main-content-h1">
                         {{ $prismic.richTextAsPlain(fields.title) }}
                     </div>
@@ -22,6 +22,12 @@
 </template>
 
 <script>
+// slug: [
+//         {
+//           url: `/article/${fields.uid}`,
+//           uri: "hello world"
+//         }
+//       ],
 export default {
   name: 'Main Banner',
   data () {
@@ -36,7 +42,7 @@ export default {
         url: null,
         banner_img: null,
         article_content: null
-      }
+      },
     }
   },
   methods: {
