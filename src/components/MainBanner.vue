@@ -2,12 +2,12 @@
     <!-- Main Section -->
     <!-- Main Content Wrapper with image-->
         <div class="main-content-wrapper" 
-            v-bind:style="{ 'background-image': 'url(' + fields.img_url + ')' }">
+            v-bind:style="{ 'background-image': 'url(' + fields.banner_img_url + ')' }">
             <!-- Overlay -->
             <div class="main-content-overlay">
                 <!-- Main Heading -->
                 <div class="main-content-h1-w">
-                  <router-link :to="{ name: 'article', params: { uid: fields.uid }}" v-bind:fields="fields" tag="div">
+                  <router-link :to="{ name: 'article', params: { uid: fields.uid }}" tag="div">
                     <div class="main-content-h1">
                         {{ $prismic.richTextAsPlain(fields.title) }}
                     </div>
@@ -24,54 +24,46 @@
 <script>
 export default {
   name: "MainBanner",
-    data () {
+  data() {
     return {
-      documentId: '',
+      documentId: "",
       fields: {
         uid: null,
-        img_url: null,
-        title: null,
-        description: null,
-        category: null,
-        author: null,
-        author_credentials: null,
-        author_social: null,
-        timestamp: null
+        banner_image: null,
+        banner_img_url: null,
+        title: null
       }
-    }
+    };
   },
   methods: {
-    getContent (uid) {
-      this.$prismic.client.getSingle('main_article')
-        .then((document) => {
+    getContent(uid) {
+      this.$prismic.client
+        .query(this.$prismic.Predicates.at("document.type", "article"))
+        .then(response => {
           if (document) {
-            this.documentId = document.id
-            this.fields.uid = document.uid
-            this.fields.img_url =  document.data.banner_image.url
-            this.fields.title = document.data.title
-            this.fields.description = document.data.description
-            this.fields.category = document.data.category;
-            this.fields.author = document.data.author;
-            this.fields.author_credentials = document.data.author_credentials;
-            this.fields.author_social = document.data.author_social;
-            this.fields.timestamp = document.data.timestamp;
+            // document contains the document content
+            const document = response.results[0];
+            this.fields.uid = document.uid;
+            this.fields.title = document.data.title;
+            this.fields.banner_img_url = document.data.banner_image.url;
+            // var today = new Date();
+            // console.log(today);
           } else {
-            this.$router.push({ name: 'not-found' })
+            this.$router.push({ name: "not-found" });
           }
-        })
+        });
     }
   },
-  created () {
-    this.getContent(this.$route.params.uid)
+  created() {
+    this.getContent(this.$route.params.uid);
   },
-  beforeRouteUpdate (to, from, next) {
-    this.getContent(to.params.uid)
-    next()
+  beforeRouteUpdate(to, from, next) {
+    this.getContent(to.params.uid);
+    next();
   }
-}
+};
 </script>
 <style lang="scss">
-
 @import "./../scss/main";
 
 /* Main Section */
@@ -105,7 +97,6 @@ export default {
     text-decoration: underline;
     text-decoration-color: $primary-color;
   }
-
 }
 
 /* Desktops and laptops ----------- */

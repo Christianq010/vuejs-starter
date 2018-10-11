@@ -3,7 +3,7 @@
         <navbar />
         <social-share-col />
         <main-article v-bind:fields="fields"></main-article>
-        <!-- <p> {{ $prismic.richTextAsPlain(fields.title) }}  </p> -->
+        <!-- <p> {{ $prismic.richTextAsPlain(fields.description) }}  </p> -->
     </div>
 </template>
 
@@ -14,13 +14,13 @@ import SocialShareCol from "./../components/Articles/SocialShareCol";
 import MainArticle from "./../components/Articles/MainArticle";
 
 export default {
-  // name: "article",
+  name: "mainarticle",
   data() {
     return {
       documentId: "",
       fields: {
         uid: null,
-        banner_img: null,
+        banner_image: null,
         banner_img_url: null,
         title: null,
         description: null,
@@ -28,29 +28,51 @@ export default {
         author: null,
         author_credentials: null,
         author_social: null,
-        timestamp: null
+        author_thumbnail: null,
+        author_thumbnail_url: null,
+        timestamp: null,
+        article_image_one: null,
+        article_image_one_url: null,
+        article_image_one_caption: null,
+        article_content: null,
+        quote: null,
+        quote_author: null,
+        article_content_two: null
       }
     };
   },
   methods: {
     getContent(uid) {
-      this.$prismic.client.getSingle("main_banner").then(document => {
-        if (document) {
-          this.documentId = document.id;
-          this.fields.uid = document.uid;
-          this.fields.banner_img = document.data.banner_img;
-          this.fields.banner_img_url = document.data.banner_img.url;
-          this.fields.title = document.data.title;
-          this.fields.description = document.data.description;
-          this.fields.category = document.data.category;
-          this.fields.author = document.data.author;
-          this.fields.author_credentials = document.data.author_credentials;
-          this.fields.author_social = document.data.author_social;
-          this.fields.timestamp = document.data.timestamp;
-        } else {
-          this.$router.push({ name: "not-found" });
-        }
-      });
+      this.$prismic.client
+        .query(this.$prismic.Predicates.at("document.type", "article"))
+        .then(response => {
+          if (document) {
+            // document contains the document content
+            const document = response.results[0];
+            this.fields.uid = document.uid;
+            this.fields.title = document.data.title;
+            this.fields.banner_img_url = document.data.banner_image.url;
+            this.fields.description = document.data.description;
+            this.fields.category = document.data.category;
+            this.fields.author = document.data.author;
+            this.fields.author_credentials = document.data.author_credentials;
+            this.fields.author_social = document.data.author_social;
+            this.fields.author_thumbnail = document.data.author_thumbnail;
+            this.fields.author_thumbnail_url = document.data.author_thumbnail.url;
+            this.fields.timestamp = document.data.timestamp;
+            this.fields.article_image_one = document.data.article_image_one;
+            this.fields.article_image_one_url = document.data.article_image_one.url;
+            this.fields.article_image_one_caption = document.data.article_image_one_caption;
+            this.fields.article_content = document.data.article_content;
+            this.fields.quote = document.data.quote;
+            this.fields.quote_author = document.data.quote_author;
+            this.fields.article_content_two = document.data.article_content_two;
+            // var today = new Date();
+            // console.log(today);
+          } else {
+            this.$router.push({ name: "not-found" });
+          }
+        });
     }
   },
   created() {
